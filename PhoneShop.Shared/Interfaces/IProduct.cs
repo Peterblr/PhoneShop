@@ -10,6 +10,7 @@ namespace PhoneShop.Shared.Interfaces
 {
     public interface IProduct
     {
-        Task<ServiceResponce> AddProduct(Product product);
+        Task<List<Product>> GetAllProducts(bool featuredProducts);
+        Task<ServiceResponse> AddProduct(Product product);
     }
 }

@@ -15,9 +15,17 @@ namespace PhoneShop.Server.Repositories
             this.appDbContext = appDbContext;
         }
 
-        public async Task<ServiceResponce> AddProduct(Product product)
+        public async Task<List<Product>> GetAllProducts(bool featuredProducts)
         {
-            if (product is null) return new ServiceResponce(false, "Product is null");
+            if (featuredProducts)
+                return await appDbContext.Products.Where(_ => _.Featured).ToListAsync();
+            else
+                return await appDbContext.Products.ToListAsync();
+        }
+
+        public async Task<ServiceResponse> AddProduct(Product product)
+        {
+            if (product is null) return new ServiceResponse(false, "Product is null");
 
             var (flag, message) = await CheckName(product.Name!);
 
@@ -25,15 +33,15 @@ namespace PhoneShop.Server.Repositories
             {
                 appDbContext.Products.Add(product);
                 await Commit();
-                return new ServiceResponce(true, "Product Saved");
+                return new ServiceResponse(true, "Product Saved");
             }
-            return new ServiceResponce(flag, message);
+            return new ServiceResponse(flag, message);
         }
 
-        private async Task<ServiceResponce> CheckName(string name)
+        private async Task<ServiceResponse> CheckName(string name)
         {
             var product = await appDbContext.Products.FirstOrDefaultAsync(x => x.Name.ToLower()!.Equals(name.ToLower()));
-            return product is null ? new ServiceResponce(true, null!) : new ServiceResponce(false, "Product already exist");
+            return product is null ? new ServiceResponse(true, null!) : new ServiceResponse(false, "Product already exist");
         }
 
         private async Task Commit() => await appDbContext.SaveChangesAsync();

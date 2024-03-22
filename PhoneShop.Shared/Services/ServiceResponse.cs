@@ -6,5 +6,5 @@ using System.Threading.Tasks;
 
 namespace PhoneShop.Shared.Services
 {
-    public record class ServiceResponce(bool Flag, string Message);
+    public record class ServiceResponse(bool Flag, string Message);
 }
