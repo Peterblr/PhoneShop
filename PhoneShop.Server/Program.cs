@@ -1,3 +1,8 @@
+using Microsoft.EntityFrameworkCore;
+using PhoneShop.Server.Data;
+using PhoneShop.Server.Repositories;
+using PhoneShop.Shared.Interfaces;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -7,6 +12,15 @@ builder.Services.AddRazorPages();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
+// Starting connection
+builder.Services.AddDbContext<AppDbContext>(options =>
+{
+    options.UseSqlServer(builder.Configuration.GetConnectionString("Default") ?? throw new InvalidOperationException("Connection string not found!"));
+});
+builder.Services.AddScoped<IProduct, ProductRepository>();
+
+//Ending...
 
 var app = builder.Build();
 
