@@ -5,14 +5,9 @@ using PhoneShop.Shared.Services;
 
 namespace PhoneShop.Server.Repositories
 {
-    public class ProductRepository : IProduct
+    public class ProductRepository(AppDbContext appDbContext) : IProduct
     {
-        private readonly AppDbContext appDbContext;
-
-        public ProductRepository(AppDbContext appDbContext)
-        {
-            this.appDbContext = appDbContext;
-        }
+        private readonly AppDbContext appDbContext = appDbContext;
 
         public async Task<List<Product>> GetAllProducts(bool featuredProducts)
         {
