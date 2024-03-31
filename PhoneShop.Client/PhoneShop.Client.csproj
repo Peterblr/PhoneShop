@@ -17,4 +17,8 @@
     <ProjectReference Include="..\PhoneShop.Shared\PhoneShop.Shared.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="wwwroot\icons\" />
+  </ItemGroup>
+
 </Project>

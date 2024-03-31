@@ -1,0 +1,103 @@
+﻿<div class="container-fluid mt-5">
+    <div class="row">
+        <div class="col-md-12 col-sm-12">
+            <hr/>
+            <span>Featured</span>
+            <div class="card border-0">
+                <div class="card-body">
+                    <div class="d-flex justify-content-evenly align-items-center">
+                        <img src="/icons/less-than.png" height="32" width="32" alt="Alternate Text" id="styleCursor" @onclick="PreviousButton" />
+                        @if (FeaturedProductsList is null) return;
+                        @foreach (var item in FeaturedProductsList)
+                        {
+                            <div class="card">
+                                <div class="card-body">
+                                    @if (item.DateUploaded.AddDays(30) > DateTime.Now)
+                                    {
+                                        <span class="badge bg-primary d-flex align-items-end float-end" style="width:50px;">
+                                            New
+                                        </span>
+                                    }
+                                    else
+                                    {
+                                        <span class="badge bg-primary d-flex align-items-end float-end" style="width:50px;">
+                                           
+                                        </span>
+                                    }
+                                    <img class="card-img-top childImage" src="@item.Base64Img" width="150" height="200" style="min-width:150px;max-width:150px;"/>
+                                    <div id="productCover" class="bg-secondary text-white d-flex justify-content-center text-wrap">
+                                        @item.Name
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                        <img src="/icons/greater-than.png" height="32" width="32" alt="Alternate Text" id="styleCursor" @onclick="NextButton" />
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@code {
+    List<Product>? ProductList = new();
+    List<Product> FeaturedProductsList = new();
+
+    public int PageSize { get; set; } = 6;
+    public int Skip { get; set; } = 0;
+    public int Take { get; set; } = 6;
+
+    protected override async Task OnInitializedAsync() => await RetriveProducts();
+
+    private async Task RetriveProducts()
+    {
+        ProductList?.Clear();
+        bool featured = true;
+        var results = await ClientService.GetAllProducts(featured);
+
+        if (results is null) return;
+
+        foreach (var i in results)
+        {
+            ProductList!.Add(i);
+        }
+
+        LoadData();
+    }
+
+    void LoadData()
+    {
+        var getData = ProductList!.Skip(Skip).Take(Take).ToList();
+        Skip += PageSize;
+        FeaturedProductsList?.Clear();
+        foreach (var i in getData)
+            FeaturedProductsList!.Add(i);
+    }
+
+    void PreviousButton()
+    {
+        if (Skip == 6) return;
+
+        var getNextProducts = ProductList!.Skip(Skip - (PageSize * 2)).Take(Take).ToList();
+
+        Skip -= PageSize;
+        FeaturedProductsList?.Clear();
+
+        foreach (var i in getNextProducts)
+            FeaturedProductsList!.Add(i);
+    }
+    
+    void NextButton()
+    {
+        if (Skip > ProductList!.Count()) return;
+
+        var getNextProducts = ProductList!.Skip(Skip).Take(Take).ToList();
+
+        Skip += PageSize;
+        FeaturedProductsList?.Clear();
+
+        foreach (var i in getNextProducts)
+            FeaturedProductsList!.Add(i);
+
+    }
+}
