@@ -30,7 +30,7 @@
                         </div>
                         <div class="mb-3 mt-3">
                             <label class="form-label @(ImageUploadMessage == "" ? "" : "text-danger")">
-                                @(ImageUploadMessage == "" ? "Upload Image" : ImageUploadMessage)
+                                @(ImageUploadMessage == "" ? "Upload Image (.png)" : ImageUploadMessage)
                             </label>
                             <InputFile class="form-control" OnChange="UploadImage"></InputFile>
                             <ValidationMessage For="@(() => MyProduct.Base64Img)" />
