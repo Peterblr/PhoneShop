@@ -1,7 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using PhoneShop.Server.Data;
 using PhoneShop.Server.Repositories;
-using PhoneShop.Shared.Interfaces;
 
 var builder = WebApplication.CreateBuilder(args);
 

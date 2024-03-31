@@ -1,6 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using PhoneShop.Shared.Interfaces;
+﻿using Microsoft.AspNetCore.Mvc;
+using PhoneShop.Server.Repositories;
 using PhoneShop.Shared.Models;
 using PhoneShop.Shared.Services;
 
