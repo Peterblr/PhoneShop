@@ -11,7 +11,7 @@
                             {
                                 <CarouselItem>
                                     <figure class="img-container">
-                                        <img src="@product.Base64Img" width="250" height="380" class="float-end" />
+                                        <img src="@product.Base64Img" width="250" height="380" class="float-end" style="min-width:250px;max-width:250px;" />
                                     </figure>
                                     <div class=" d-flex justify-content-center">
                                         <div style="position:absolute; bottom:50px;">
@@ -42,10 +42,10 @@
                             }
                         </ChildContent>
                         <PreviousButtonTemplate>
-                            <img src="/icons/less_than.png" width="50" height="50" id="styleCursor"/>
+                            <img src="/icons/less-than.png" height="50" id="styleCursor"/>
                         </PreviousButtonTemplate>
                         <NextButtonTemplate>
-                            <img src="/icons/more-than.png" width="50" height="50" id="styleCursor" />
+                            <img src="/icons/greater-than.png" height="50" id="styleCursor" />
                         </NextButtonTemplate>
                         <IndicatorsTemplate>
                             <div class="indicator"></div>
@@ -65,10 +65,7 @@
 @code {
     List<Product>? FeaturedProductList = new();
 
-    protected override async Task OnInitializedAsync()
-    {
-        await RetrieveFeaturedProducts();
-    }
+    protected override async Task OnInitializedAsync() => await RetrieveFeaturedProducts();
 
     private async Task RetrieveFeaturedProducts()
     {
