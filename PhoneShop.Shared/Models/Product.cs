@@ -23,5 +23,10 @@ namespace PhoneShop.Shared.Models
         public int Quantity { get; set; }
         public bool Featured { get; set; } = false;
         public DateTime DateUploaded { get; set; } = DateTime.Now;
+
+        //Relationship : Many to One
+        public Category? Category { get; set; }
+        public int CategoryId { get; set; }
+
     }
 }

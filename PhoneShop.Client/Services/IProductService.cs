@@ -6,9 +6,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace PhoneShop.Shared.Interfaces
+namespace PhoneShop.Client.Services
 {
-    public interface IProduct
+    public interface IProductService
     {
         Task<List<Product>> GetAllProducts(bool featuredProducts);
         Task<ServiceResponse> AddProduct(Product product);
